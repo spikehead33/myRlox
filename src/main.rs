@@ -1,4 +1,6 @@
 mod compiler_error;
+mod compiler;
+mod location;
 
 use compiler_error::CompilerError;
 use std::{env, path::Path};
