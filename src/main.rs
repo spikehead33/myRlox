@@ -8,8 +8,7 @@ fn run(code: String) -> Result<(), CompilerError> {
 }
 
 fn run_file(filepath: &Path) -> Result<(), CompilerError> {
-    let code = std::fs::read_to_string(filepath)
-                .map_err(CompilerError::NoSuchFileError)?;
+    let code = std::fs::read_to_string(filepath).map_err(CompilerError::NoSuchFileError)?;
     run(code)
 }
 
