@@ -1,20 +1,29 @@
-mod compiler_error;
 mod compiler;
+mod compiler_error;
 mod location;
+mod utils;
 
 use compiler_error::CompilerError;
 use std::{env, path::Path};
+use utils::CompilerResult;
 
-fn run(code: String) -> Result<(), CompilerError> {
+fn run(filepath: Option<&Path>, code: String) -> CompilerResult<()> {
+    let filepath = if let Some(fp) = filepath {
+        fp
+    } else {
+        Path::new("")
+    };
+
+    // let lexer = compiler::Lexer::new(filepath, code);
     Ok(())
 }
 
-fn run_file(filepath: &Path) -> Result<(), CompilerError> {
+fn run_file(filepath: &Path) -> CompilerResult<()> {
     let code = std::fs::read_to_string(filepath).map_err(CompilerError::NoSuchFileError)?;
-    run(code)
+    run(Some(filepath), code)
 }
 
-fn run_prompt() -> Result<(), CompilerError> {
+fn run_prompt() -> CompilerResult<()> {
     let mut expression = String::new();
     let stdin = std::io::stdin();
 
@@ -29,9 +38,9 @@ fn run_prompt() -> Result<(), CompilerError> {
             break;
         }
 
-        if let Err(e) = run(expression.clone()) {
-            eprint!("{:?}", e);
-        }
+        // if let Err(e) = run(expression.clone()) {
+        //     eprint!("{:?}", e);
+        // }
 
         expression.clear();
     }
@@ -39,7 +48,7 @@ fn run_prompt() -> Result<(), CompilerError> {
     Ok(())
 }
 
-fn main() -> Result<(), CompilerError> {
+fn main() -> CompilerResult<()> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() > 2 {

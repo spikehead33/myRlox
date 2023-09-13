@@ -4,6 +4,8 @@ use std::{error::Error, fmt::Debug};
 pub enum CompilerError {
     #[error("no such file")]
     NoSuchFileError(#[source] std::io::Error),
+    #[error("will be filled in")]
+    LexerError,
 }
 
 impl Debug for CompilerError {

@@ -1,4 +1,6 @@
-mod token;
-mod lexer;
 mod codegen;
+mod lexer;
 mod parser;
+mod token;
+
+pub use lexer::Lexer;
